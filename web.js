@@ -17,7 +17,6 @@ app.use(sass.middleware({
 app.get('/', function(req, res) {
   res.render('index', {
     title: 'Tic Tac Toe Challenge',
-    asdf: "asdf"
   });  
 });
 
