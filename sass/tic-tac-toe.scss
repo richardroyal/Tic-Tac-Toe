@@ -1,0 +1,41 @@
+/* Page
+================================================ */
+.wrapper{
+  width: 300px;
+  margin: auto;
+
+  h2{ text-align: center; }
+  p{ text-align: center; }
+}
+
+/* Game Board styles
+================================================ */
+table.game{
+  border-collapse:collapse;
+  width: 300px;
+  margin: auto;
+
+  td{
+    border:1px solid #d4d4d4;
+    text-align:center;
+    vertical-align:middle;
+    height: 100px;
+    width: 100px;
+    font-size: 45px;
+    &:hover{
+      background-color: #e5eecc;  
+    }
+    span{
+      margin: 0;
+      padding:0;
+    }
+  }
+  td.user_claimed{
+    background-color: #e5eecc;  
+    color:#363636;
+  }
+  td.bot_claimed{
+    background-color: #d4d4d4;
+    color:#363636;
+  }
+}
