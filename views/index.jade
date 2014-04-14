@@ -1,22 +1,23 @@
 doctype html
 html(lang="en")
   head
-    title Tic Tac Toe Challenge
+    title= title
+
+    link( rel='stylesheet', href='/css/tic-tac-toe.css', type='text/css' )
+    script( src='/js/jquery-1.11.0.min.js' )
+    script( src='/js/jquery.tic-tac-toe.js' )
+    script.
+      $( document ).ready(function() {
+        $("table.game").Tic_Tac_Toe();
+      });
 
   body
-    .container
+    .container.wrapper
       h2 Tic Tac Toe
 
       table.game
-        tr
-          td
-          td
-          td
-        tr
-          td
-          td
-          td
-        tr
-          td
-          td
-          td
+        - for (var i = 0; i < 3; i++)
+          tr
+            td
+            td
+            td

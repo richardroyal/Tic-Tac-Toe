@@ -1,14 +1,23 @@
 var express = require("express");
 var logfmt = require("logfmt");
+var sass = require("node-sass");
 var app = express();
 
 app.set('view engine', 'jade');
 app.use(express.static('public'));
 app.use(logfmt.requestLogger());
 
+app.use(sass.middleware({
+  src: __dirname + '/sass',
+  dest: __dirname + '/public/css',
+  debug: true,
+  outputStyle: 'compressed'
+}));
+
+
 app.get('/', function(req, res) {
   res.render('index', {
-    title: 'Home'
+    title: 'Tic Tac Toe Challenge'
   });  
 });
 
