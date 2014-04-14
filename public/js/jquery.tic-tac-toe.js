@@ -17,7 +17,6 @@
     var total_positions = [];
     var game_over = false;
     var winning_combinations = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
-    winning_combinations = winning_combinations;
     var cross_positions = [2,4,6,8];
     
 
@@ -28,7 +27,7 @@
       $(this).data("position", index + 1);
       total_positions.push( index + 1 );
     });
-    $(board).after("<p id='msg_" + id + "'>Make the first move.</p>");
+    $(board).after("<p id='msg_" + id + "' class='game_msg'>Make the first move.</p>");
 
 
     /************************************************************/

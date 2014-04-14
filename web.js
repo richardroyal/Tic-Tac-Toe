@@ -6,7 +6,6 @@ var app = express();
 app.set('view engine', 'jade');
 app.use(express.static('public'));
 app.use(logfmt.requestLogger());
-
 app.use(sass.middleware({
   src: __dirname + '/sass',
   dest: __dirname + '/public/css',
@@ -17,7 +16,8 @@ app.use(sass.middleware({
 
 app.get('/', function(req, res) {
   res.render('index', {
-    title: 'Tic Tac Toe Challenge'
+    title: 'Tic Tac Toe Challenge',
+    asdf: "asdf"
   });  
 });
 

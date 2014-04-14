@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   head
-    title= title
+    title #{title}
 
     link( rel='stylesheet', href='/css/tic-tac-toe.css', type='text/css' )
     script( src='/js/jquery-1.11.0.min.js' )
@@ -13,7 +13,7 @@ html(lang="en")
 
   body
     .container.wrapper
-      h2 Tic Tac Toe
+      h2 #{title}
 
       table.game
         - for (var i = 0; i < 3; i++)
