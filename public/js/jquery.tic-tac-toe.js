@@ -15,7 +15,6 @@
     var user_positions = [];
     var bot_positions = [];
     var total_positions = [];
-    var game_over = false;
     var winning_combinations = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
     var cross_positions = [2,4,6,8];
     
@@ -34,32 +33,42 @@
     /* Register user click event listener                       */
     /************************************************************/
     $("td", board).click(function(e) {
-
-      if( ! game_over ) {
+      
+      if( ! Game.is_over() ) {
         $("p#msg_" + id).text("");
 
         position = $(this).data('position');
   
-        if( user_can_claim_position( position ) ) {
-          user_positions.push( position );
+        if( Game.position_is_claimable( position ) ) {
+
+          Game.claim_position( 'player_a', position );
           $(this).addClass("user_claimed");
           $(this).html('<span>X</span>');
   
-          if( check_user_has_won() ){
+          if( Game.user_has_won('player_a') ){
 
-            game_over = true; 
             $("p#msg_" + id).text("User has won.");
             $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
 
           } else {
-            bot_make_move();
+
+            position = AI.get_move( Game.claimed_positions );
+            Game.claim_position( 'player_b', position );
+
           }
 
-          if( check_bot_has_won() ) {
-            game_over = true; 
+          if( Game.user_has_won('player_b') ) {
+
             $("p#msg_" + id).text("Bot has won.");
             $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
-          } 
+
+          } else if( Game.ended_in_tie() ){
+
+            $("p#msg_" + id).text("Game has ended in a tie.");
+            $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+
+          }
+
         }
       }
 
@@ -104,8 +113,8 @@
     function bot_winning_move(){
 
       move = -1;
-      for(i=0;i<winning_combinations.length;i++){
-        win = winning_combinations[i];
+      for( i=0; i < Game.winning_combinations.length; i++ ){
+        win = Game.winning_combinations[i];
         if( $(win).not(bot_positions).length == 1 ){
           m = $(win).not(bot_positions)[0];
           if( $.inArray(m, user_positions) == -1 && move == -1 ){
@@ -120,8 +129,8 @@
     function bot_block_winning_move(){
 
       move = -1;
-      for( i=0; i < winning_combinations.length; i++ ){
-        win = winning_combinations[i];
+      for( i=0; i < Game.winning_combinations.length; i++ ){
+        win = Game.winning_combinations[i];
         if( $(win).not(user_positions).length == 1 ){
           m = $(win).not(user_positions)[0];
           if( $.inArray(m, bot_positions) == -1 && move == -1 ){
@@ -205,7 +214,6 @@
         }
       }
 
-
       nmove = { 'minimax': -1000, 'move': null };
       for( var branch in minimax ){
         b_sum = 0;
@@ -277,8 +285,8 @@
 
       if( ! game_over ){
       
-        for( i=0; i<winning_combinations.length; i++ ){
-          win = winning_combinations[i];
+        for( i=0; i < Game.winning_combinations.length; i++ ){
+          win = Game.winning_combinations[i];
           if( $(win).not(bot_positions).length == 0 ){
             won = true;
           }
@@ -293,8 +301,8 @@
 
       if( ! game_over ){
 
-        for( i=0; i<winning_combinations.length; i++ ){
-          win = winning_combinations[i];
+        for( i=0; i < Game.winning_combinations.length; i++ ){
+          win = Game.winning_combinations[i];
           if( $(win).not(user_positions).length == 0 ){
             won = true;
           }
@@ -308,8 +316,8 @@
     function wins_left( opponent_positions ){
       remaining_wins = 0;
       
-      for( k=0; k < winning_combinations.length; k++ ){
-        win = winning_combinations[k];
+      for( k=0; k < Game.winning_combinations.length; k++ ){
+        win = Game.winning_combinations[k];
         if( $(win).not(opponent_positions).length == 3 ){
           remaining_wins += 1;
         }
@@ -321,8 +329,8 @@
     function ply_has_winner( player_positions ){
       has_winner = false;
       
-      for( m=0; m < winning_combinations.length; m++ ){
-        win = winning_combinations[m];
+      for( m=0; m < Game.winning_combinations.length; m++ ){
+        win = Game.winning_combinations[m];
         if( $(win).not(player_positions).length == 0 ){
           has_winner = true;
         }
