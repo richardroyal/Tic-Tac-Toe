@@ -5,16 +5,16 @@ echo "casperjs - `casperjs --version`"
 echo "------------------------------------------------------"
 
 echo "Running unit test on Game object."
-casperjs test --includes=../public/js/game.js,../public/js/jquery-1.11.0.min.js unit/game.js
+casperjs test --includes=../public/js/jquery-1.11.0.min.js,../public/js/game.js,../public/js/ai.js unit/game.js unit/ai.js
 
 
-echo "------------------------------------------------------"
-N=10
-echo "Running integration tests ($N times)."
-for (( c=0; c<=$N; c++ ))
-do
-  casperjs test integration/play_game.js
-done
-
-echo "Finished running test $N times."
-echo "------------------------------------------------------"
+#echo "------------------------------------------------------"
+#N=10
+#echo "Running integration tests ($N times)."
+#for (( c=0; c<=$N; c++ ))
+#do
+#  casperjs test integration/play_game.js
+#done
+#
+#echo "Finished running test $N times."
+#echo "------------------------------------------------------"

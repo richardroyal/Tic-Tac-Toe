@@ -73,6 +73,7 @@ casper.test.begin('User can claim open positions', 22, function suite(test) {
 
 
   casper.run(function() {
+    Game.reset();
     test.done();
   });
 
