@@ -36,7 +36,7 @@ var Game = {
 
   is_over: function(){
 
-    if( this.total_claimed_positions > 8 ){
+    if( this.total_claimed_positions() > 8 ){
 
       return true;
 
@@ -53,9 +53,9 @@ var Game = {
   user_has_won: function(user){
     winner = false;
 
-    for( i=0; i < Game.winning_combinations.length; i++ ){
-      win = Game.winning_combinations[i];
-      if( $(win).not( this.claimed_positions[user] ).length == 1 ){
+    for( var i=0; i < this.winning_combinations.length; i++ ){
+      var win = this.winning_combinations[i];
+      if( $(win).not( this.claimed_positions[user] ).length == 0 ){
         winner = true;
       }
     }
@@ -65,7 +65,7 @@ var Game = {
 
   ended_in_tie: function() {
 
-    if( this.total_claimed_positions < 9 ){
+    if( this.total_claimed_positions() < 9 ){
     
       return false;
 
@@ -80,10 +80,15 @@ var Game = {
 
   total_claimed_positions: function(){
 
-    a_claimed = this.claimed_positions('player_a').length;
-    b_claimed = this.claimed_positions('player_b').length;
+    a_claimed = this.claimed_positions.player_a.length;
+    b_claimed = this.claimed_positions.player_b.length;
 
     return a_claimed + b_claimed;
+  },
+
+  reset: function(){
+    this.claimed_positions.player_a = [];
+    this.claimed_positions.player_b = [];
   },
 
 }

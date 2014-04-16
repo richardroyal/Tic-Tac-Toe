@@ -55,6 +55,13 @@
             position = AI.get_move( Game.claimed_positions );
             Game.claim_position( 'player_b', position );
 
+            $('td', board).filter(function() {
+              if( $(this).data('position') && $(this).data('position') == position ){
+                $(this).addClass("bot_claimed");
+                $(this).html('<span>O</span>');
+              }
+            });
+
           }
 
           if( Game.user_has_won('player_b') ) {
