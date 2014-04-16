@@ -7,6 +7,9 @@ echo "------------------------------------------------------"
 echo "Running unit test on Game object."
 casperjs test --includes=../public/js/jquery-1.11.0.min.js,../public/js/game.js,../public/js/ai.js unit/game.js unit/ai.js
 
+echo "------------------------------------------------------"
+echo "Testing that game results can only be saved with an active nonce key."
+casperjs test integration/nonce.js
 
 #echo "------------------------------------------------------"
 #N=10
