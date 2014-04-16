@@ -15,6 +15,7 @@ html(lang="en")
 
   body
     input(type='hidden', name='_csrf', value=token)
+    input(type='hidden', name='nonce', value="#{nonce}" )
     .container.wrapper
       h2 #{title}
 

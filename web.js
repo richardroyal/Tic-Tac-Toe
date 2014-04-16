@@ -1,6 +1,8 @@
 var express = require("express");
 var logfmt = require("logfmt");
 var sass = require("node-sass");
+var crypto = require('crypto')
+
 var app = express();
 var mongo_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||
                 'mongodb://localhost:27017/tictactoe';
@@ -30,8 +32,21 @@ function csrf(req, res, next) {
 /* Routes
 ------------------------------------------------*/
 app.get('/', csrf, function(req, res) {
+  nonce: crypto.pseudoRandomBytes(256).toString('hex');
+
+  MongoClient.connect( mongo_uri, function(err, db) {
+    if( ! err ) {
+  
+      db.createCollection('nonce', function(err, collection) {
+        var result = { result: req.params.result };
+        collection.insert( { key: nonce }, { w: 0 } );
+      });
+    }
+  }
+
   res.render('index', {
     title: 'Tic Tac Toe Challenge',
+    nonce: nonce
   });  
 });
 
