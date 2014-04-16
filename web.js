@@ -28,11 +28,29 @@ function csrf(req, res, next) {
   next();
 }
 
+function check_nonce( nonce ){
+  var auth = false;
+  MongoClient.connect( mongo_uri, function(err, db) {
+    db.createCollection('nonce', function(err, collection) {
+      collection.count( { key: nonce }, function(err, count) {
+        console.log('CHECKING NONCE: ' + count);
+        if( count ){
+          console.log('CHECKING NONCE: ' + count);
+          auth = true;
+        }
+      });
+    });
+  });
+
+  console.log('CHECKING AUTH: ' + auth);
+  return auth;
+}
+
 
 /* Routes
 ------------------------------------------------*/
 app.get('/', csrf, function(req, res) {
-  nonce: crypto.pseudoRandomBytes(256).toString('hex');
+  var nonce = crypto.pseudoRandomBytes(256).toString('hex');
 
   MongoClient.connect( mongo_uri, function(err, db) {
     if( ! err ) {
@@ -41,8 +59,9 @@ app.get('/', csrf, function(req, res) {
         var result = { result: req.params.result };
         collection.insert( { key: nonce }, { w: 0 } );
       });
+
     }
-  }
+  });
 
   res.render('index', {
     title: 'Tic Tac Toe Challenge',
@@ -57,13 +76,25 @@ app.get('/results/:result', function(req, res){
     
     MongoClient.connect( mongo_uri, function(err, db) {
       if( ! err ) {
-  
-        db.createCollection('results', function(err, collection) {
-          var result = { result: req.params.result };
-          collection.insert( result, { w: 0 } );
+
+        db.createCollection('nonce', function(err, nonce_collection) {
+          nonce_collection.count( { key: req.query.nonce }, function(err, count) {
+            if( count ){
+
+              db.createCollection('results', function(err, result_collection) {
+                var result = { result: req.params.result };
+                result_collection.insert( result, { w: 0 } );
+              });
+          
+              nonce_collection.remove({key: req.query.nonce}, {w:0} );
+              res.status(200).send('Result saved.');
+
+            } else {
+
+              res.status(401).send('Invalid authorization.');
+            }
+          });
         });
-    
-        res.status(200).send('Result saved.');
 
       } else {
 

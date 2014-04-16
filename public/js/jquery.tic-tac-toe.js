@@ -47,8 +47,22 @@
   
           if( Game.user_has_won('player_a') ){
 
-            $("p#msg_" + id).text("User has won.");
-            $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+            $.ajax({
+
+              url: '/results/win',
+              data: { nonce: $('input#nonce').val() },
+              
+              error: function(xhr, status, error){
+
+                $("p#msg_" + id).append( xhr.responseText + "<br />");
+              },
+              complete: function(xhr,status){
+  
+                $("p#msg_" + id).append("You have won!<br />");
+                $("p#msg_" + id).append("<a href='.'>New Game?</a>");
+              }
+              
+            });
 
           } else {
 
@@ -66,13 +80,41 @@
 
           if( Game.user_has_won('player_b') ) {
 
-            $("p#msg_" + id).text("Bot has won.");
-            $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+            $.ajax({
+
+              url: '/results/loss',
+              data: { nonce: $('input#nonce').val() },
+              
+              error: function(xhr, status, error){
+
+                $("p#msg_" + id).append( xhr.responseText + "<br />");
+              },
+              complete: function(xhr,status){
+  
+                $("p#msg_" + id).text("You have lost.");
+                $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+              }
+              
+            });
 
           } else if( Game.ended_in_tie() ){
 
-            $("p#msg_" + id).text("Game has ended in a tie.");
-            $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+            $.ajax({
+
+              url: '/results/tie',
+              data: { nonce: $('input#nonce').val() },
+              
+              error: function(xhr, status, error){
+
+                $("p#msg_" + id).append( xhr.responseText + "<br />");
+              },
+              complete: function(xhr,status){
+  
+                $("p#msg_" + id).text("game has ended in a tie.");
+                $("p#msg_" + id).append("<br /><a href='.'>new game?</a>");
+              }
+              
+            });
 
           }
 
