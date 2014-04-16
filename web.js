@@ -2,10 +2,9 @@ var express = require("express");
 var logfmt = require("logfmt");
 var sass = require("node-sass");
 var app = express();
-var mongo = require('mongodb');
-var mongoUri = process.env.MONGOLAB_URI ||
-               process.env.MONGOHQ_URL ||
-               'mongodb://localhost/tictactoe';
+var mongo_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||
+                'mongodb://localhost:27017/tictactoe';
+
 var MongoClient = require('mongodb').MongoClient;
 
 app.configure(function(){
@@ -23,7 +22,7 @@ app.configure(function(){
   app.use(express.csrf());
 });
 function csrf(req, res, next) {
-  res.locals.token = req.session._csrf;
+  req.csrfToken()
   next();
 }
 
@@ -37,18 +36,34 @@ app.get('/', csrf, function(req, res) {
 });
 
 
-app.get('/results/win', function(req, res){
-  MongoClient.connect( mongoUri, function(err, db) {
-    if(err) throw err;
+app.get('/results/:result', function(req, res){
 
-    var collection = db.collection('results');
-    collection.insert( { result: 1, ip: req.headers['X-Forwarded-For'] } );
-    db.close();
+  if( ['win', 'loss', 'tie'].indexOf(req.params.result) !== -1 ){
+    
+    MongoClient.connect( mongo_uri, function(err, db) {
+      if( ! err ) {
+  
+        db.createCollection('results', function(err, collection) {
+          var result = { result: req.params.result };
+          collection.insert( result, { w: 0 } );
+        });
+    
+        res.status(200).send('Result saved.');
 
-//  res.status(401)
-//  res.send('There was an error saving your result.');
-  });
+      } else {
+
+        res.status(500).send('Database connection issue.');
+        
+      }
+    });
+
+  } else {
+
+    res.status(401).send('Unrecognized result.');
+
+  }
 });
+
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
