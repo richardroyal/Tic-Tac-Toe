@@ -8,10 +8,19 @@ html(lang="en")
     script( src='/js/game.js' )
     script( src='/js/ai.js' )
     script( src='/js/jquery.tic-tac-toe.js' )
+    script( src='/js/Chart.min.js' )
     script.
       $( document ).ready(function() {
         $("table.game").Tic_Tac_Toe();
+
+        $.getJSON( "/results/data/chart.json", function( data ) { 
+          var ctx = $("#global_doughnut").get(0).getContext("2d");
+          new Chart(ctx).Doughnut(data);  
+        });
       });
+
+    //if IE
+      script(src='/js/excanvas.js')
 
   body
     input(type='hidden', name='_csrf', value=token)
@@ -25,3 +34,8 @@ html(lang="en")
             td
             td
             td
+
+      .charts
+        .global-doughnut
+          h3 Global Stats
+          canvas#global_doughnut( width="150" height="200" )

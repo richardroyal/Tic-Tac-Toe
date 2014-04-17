@@ -11,13 +11,13 @@ echo "------------------------------------------------------"
 echo "Testing that game results can only be saved with an active nonce key."
 casperjs test integration/nonce.js
 
-#echo "------------------------------------------------------"
-#N=10
-#echo "Running integration tests ($N times)."
-#for (( c=0; c<=$N; c++ ))
-#do
-#  casperjs test integration/play_game.js
-#done
-#
-#echo "Finished running test $N times."
-#echo "------------------------------------------------------"
+echo "------------------------------------------------------"
+N=10
+echo "Running integration tests ($N times)."
+for (( c=0; c<=$N; c++ ))
+do
+  casperjs test integration/play_game.js
+done
+
+echo "Finished running test $N times."
+echo "------------------------------------------------------"
