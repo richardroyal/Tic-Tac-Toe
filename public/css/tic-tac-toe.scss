@@ -3,7 +3,8 @@
 .wrapper{
   width: 300px;
   margin: auto;
-  color: #282c36
+  color: #282c36;
+
 
   h2{ text-align: center; color: #282c36 }
   p{ text-align: center; color: #282c36 }
@@ -12,6 +13,7 @@
 /* Game Board styles
 ================================================ */
 table.game{
+  color: #282c36;
   border-collapse:collapse;
   width: 300px;
   margin: auto;

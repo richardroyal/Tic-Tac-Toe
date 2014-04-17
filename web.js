@@ -12,16 +12,17 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.static('public'));
   app.use(logfmt.requestLogger());
-  app.use(sass.middleware({
-    src: __dirname + '/sass',
-    dest: __dirname + '/public/css',
-    debug: true,
-    outputStyle: 'compressed'
-  }));
   app.use(express.cookieParser());
   app.use(express.session({ secret: "O5DqWbS8sERTz5xL" }));
   app.use(express.csrf());
+  app.use(sass.middleware({
+    src: __dirname + '/public/',
+    dest: __dirname + '/public/',
+    debug: true,
+    outputStyle: 'compressed'
+  }));
 });
+
 function csrf(req, res, next) {
   req.csrfToken()
   next();
