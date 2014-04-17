@@ -1,19 +1,25 @@
+$font-stack: Helvetica, sans-serif;
+$primary-color: #4D5360;
+
 /* Page
 ================================================ */
-.wrapper{
+body, .wrapper{
+
+  font: 100% $font-stack;
+  color: $primary-color;
   width: 300px;
   margin: auto;
-  color: #282c36;
 
+  h2{ text-align: center; color: $primary-color }
+  p{ text-align: center; color: $primary-color }
 
-  h2{ text-align: center; color: #282c36 }
-  p{ text-align: center; color: #282c36 }
+  .clearfix{ clear: both; }
 }
 
 /* Game Board styles
 ================================================ */
 table.game{
-  color: #282c36;
+  color: $primary-color;
   border-collapse:collapse;
   width: 300px;
   margin: auto;
@@ -40,5 +46,52 @@ table.game{
   td.bot_claimed{
     background-color: #d4d4d4;
     color:#363636;
+  }
+}
+
+
+/* Plotting chart styles
+================================================ */
+.results{
+  display: none;  
+
+  h4{
+    text-align: center;  
+    margin: 5px 0;
+    padding: 5px 0;
+  }
+
+  p{
+    text-align: center;  
+    margin: 2px;
+    padding: 2px;
+  }
+  p.wins{ color: #65B042; }
+  p.ties{ color: #949FB1; }
+  p.losses{ color: #F7464A; }
+
+  .global{
+    float: left;  
+  }
+  .user{
+    float: right;
+  }
+
+  p.game-end{
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+  }
+  p.new-game{
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+    a{
+      color: $primary-color;
+      text-decoration: none;
+    }
+    a:hover{
+      color: $primary-color;
+    }
   }
 }
