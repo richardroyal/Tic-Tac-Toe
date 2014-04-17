@@ -63,7 +63,10 @@ app.get('/results/:result', function(req, res){
             if( count ){
 
               db.createCollection('results', function(err, result_collection) {
-                var result = { result: req.params.result };
+                var result = { 
+                  result: req.params.result,
+                  user_id: req.query.user_id
+                };
                 result_collection.insert( result, { w: 0 } );
               });
           
@@ -94,23 +97,38 @@ app.get('/results/:result', function(req, res){
 
 /* JSON Data views for charts
 ------------------------------------------------*/
+app.get('/results/data/:set.json', function(req, res){
 
-app.get('/results/data/:chart.json', function(req, res){
+  var user_id = req.query.user_id;
 
   // JSON wins, losses, ties in format required by Charts.js
   MongoClient.connect( mongo_uri, function(err, db) {
     if( ! err ) {
 
       db.createCollection('results', function(err, results) {
-        results.count( { result: 'win' }, function(err, wins){
-          
-          results.count( { result: 'tie' }, function(err, ties){
 
-            results.count( { result: 'loss' }, function(err, losses){
+        rw = { result: 'win' };
+        if( user_id !== undefined ){
+          rw.user_id = user_id;
+        }
+         
+        results.count( rw, function(err, wins){
+          
+          rt = { result: 'tie' };
+          if( user_id !== undefined ){
+            rt.user_id = user_id;
+          }
+          results.count( rt, function(err, ties){
+
+            rl = { result: 'loss' };
+            if( user_id !== undefined ){
+              rl.user_id = user_id;
+            }
+            results.count( rl, function(err, losses){
               data = [ 
-                       { value: wins, color: "#949FB1" },
+                       { value: wins, color: "#65B042" },
                        { value: losses, color: "#F7464A" },
-                       { value: ties, color: "#D4CCC5"}
+                       { value: ties, color: "#949FB1"}
                      ];
             
               res.send(data);
@@ -124,8 +142,6 @@ app.get('/results/data/:chart.json', function(req, res){
   });
 
 });
-
-
 
 
 /* Start Server

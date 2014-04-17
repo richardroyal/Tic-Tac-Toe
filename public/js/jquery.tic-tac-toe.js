@@ -50,7 +50,10 @@
             $.ajax({
 
               url: '/results/win',
-              data: { nonce: $('input#nonce').val() },
+              data: {
+                 nonce: $('input#nonce').val(),
+                 user_id: $.cookie('ttt-rr')
+              },
               
               error: function(xhr, status, error){
 
@@ -83,7 +86,10 @@
             $.ajax({
 
               url: '/results/loss',
-              data: { nonce: $('input#nonce').val() },
+              data: { 
+                 nonce: $('input#nonce').val(),
+                 user_id: $.cookie('ttt-rr')
+              },
               
               error: function(xhr, status, error){
 
@@ -102,7 +108,10 @@
             $.ajax({
 
               url: '/results/tie',
-              data: { nonce: $('input#nonce').val() },
+              data: { 
+                 nonce: $('input#nonce').val(),
+                 user_id: $.cookie('ttt-rr')
+              },
               
               error: function(xhr, status, error){
 
@@ -110,7 +119,7 @@
               },
               complete: function(xhr,status){
   
-                $("p#msg_" + id).text("game has ended in a tie.");
+                $("p#msg_" + id).text("Game has ended in a tie.");
                 $("p#msg_" + id).append("<br /><a href='.'>new game?</a>");
               }
               
