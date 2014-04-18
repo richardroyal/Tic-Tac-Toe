@@ -51,7 +51,7 @@ var Game = {
   },
 
   user_has_won: function(user){
-    winner = false;
+    var winner = false;
 
     for( var i=0; i < this.winning_combinations.length; i++ ){
       var win = this.winning_combinations[i];

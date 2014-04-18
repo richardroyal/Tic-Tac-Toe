@@ -12,18 +12,16 @@ var AI = {
   ------------------------------------------------------------------*/
   get_move: function( claimed_positions ){
 
-    this.unbeatable = false;
-
     this.user_claimed_positions = claimed_positions.player_a;
     this.ai_claimed_positions = claimed_positions.player_b;
 
     if( this.unbeatable ){
       
-      return this.random_available_position();
+      return this.next_best_move();
 
     } else {
 
-      return this.good_next_move();
+      return this.next_good_move();
     }
   },
 
@@ -40,8 +38,7 @@ var AI = {
 
   /* Return 'Good' next move
   ------------------------------------------------------------------*/
-  good_next_move: function(){
-    console.log( this.available_positions() );
+  next_good_move: function(){
 
     if( $.inArray( 5, this.available_positions() ) !== -1 ){
       
@@ -76,7 +73,131 @@ var AI = {
     return available; 
   },
 
-  /* Return 'Perfect' next move
+
+  /* Return 'Best' next move
   ------------------------------------------------------------------*/
+  next_best_move: function(){
+
+    var ap = this.available_positions();
+
+    for( var j=0; j < ap.length; j++ ){
+
+      var state = {}
+      state.ai_claimed_positions = this.ai_claimed_positions.slice(0);
+      state.user_claimed_positions = this.user_claimed_positions.slice(0);
+
+      state.ai_claimed_positions.push( ap[j] );
+
+      this.negamax( state, -1, 0 );
+    }
+    
+    return this.random_available_position();
+  },
+
+
+
+  negamax: function( state, player, score ){
+    console.log( score );
+
+    if( this.is_terminal( state ) ){
+
+      //console.log( this.evaluate_state( state ) );
+      //console.log( score );
+      return score;
+
+    } else {
+
+      var children = this.child_positions( state );
+      
+      for( var k=0; k < children.length; k++ ){
+
+        var child_state = $.extend( {}, state );
+
+        if( player == 1 ){
+          
+          child_state.ai_claimed_positions.push( children[k] );
+
+        } else {
+
+          child_state.user_claimed_positions.push( children[k] );
+        }
+
+        var child_state_value = this.evaluate_state( child_state );
+        var branch_sum = score + child_state_value;
+
+        this.negamax( child_state, -1 * player, branch_sum );
+      }
+    }
+  },
+
+
+  evaluate_state: function( state ){
+
+    if( this.user_has_won_state( state.ai_claimed_positions ) ){
+
+      return 1; 
+
+    } else if( this.user_has_won_state( state.user_claimed_positions ) ){
+
+      return -1; 
+
+    } else {
+    
+      return 0;
+    }
+  },
+
+  child_positions: function( state ){
+
+    var available = [];
+    var current = [];
+    current = state.ai_claimed_positions.slice(0).concat( state.user_claimed_positions );
+    available = $(this.positions).not(current).get();
+
+    return available; 
+  },
+
+  is_terminal: function(state){
+
+    var claimed_positions = 0;
+    claimed_positions += state.ai_claimed_positions.length;
+    claimed_positions += state.user_claimed_positions.length;
+
+    if( claimed_positions > 8 ){
+    
+      return true;
+
+    } else if( this.user_has_won_state( state.ai_claimed_positions ) || 
+               this.user_has_won_state( state.user_claimed_positions ) ){
+
+      return true;
+
+    } else {
+    
+      return false;
+    }
+  },
+
+  user_has_won_state: function( user_positions ){
+    var winner = false;
+
+    for( var i=0; i < this.winning_combinations.length; i++ ){
+      var win = this.winning_combinations[i];
+      if( $(win).not( user_positions ).length == 0 ){
+        winner = true;
+      }
+    }
+    
+    return winner;
+  },
+
+
+  /* Reset AI
+  ------------------------------------------------------------------*/
+  reset: function(){
+    this.ai_claimed_positions = [];
+    this.user_claimed_positions = [];
+    this.unbeatable = true;
+  }
 
 }
