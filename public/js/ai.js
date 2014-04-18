@@ -12,6 +12,8 @@ var AI = {
   ------------------------------------------------------------------*/
   get_move: function( claimed_positions ){
 
+    this.unbeatable = false;
+
     this.user_claimed_positions = claimed_positions.player_a;
     this.ai_claimed_positions = claimed_positions.player_b;
 
@@ -39,8 +41,9 @@ var AI = {
   /* Return 'Good' next move
   ------------------------------------------------------------------*/
   good_next_move: function(){
+    console.log( this.available_positions() );
 
-    if( $.inArray( 5, this.available_positions() ) != -1 ){
+    if( $.inArray( 5, this.available_positions() ) !== -1 ){
       
       return 5;
 

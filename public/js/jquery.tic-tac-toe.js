@@ -61,10 +61,7 @@
               },
               complete: function(xhr,status){
   
-                $(".results").append("<p class='game-end'>You have won!</p>");
-                $(".results").append("<p class='new-game'><br /><a href='.'>New Game?</a></p>");
-
-                plot_data();
+                end_game('You have won!');
               }
               
             });
@@ -99,8 +96,7 @@
               },
               complete: function(xhr,status){
   
-                $("p#msg_" + id).text("You have lost.");
-                $("p#msg_" + id).append("<br /><a href='.'>New Game?</a>");
+                end_game('You lost.');
               }
               
             });
@@ -120,9 +116,8 @@
                 $("p#msg_" + id).append( xhr.responseText + "<br />");
               },
               complete: function(xhr,status){
-  
-                $("p#msg_" + id).text("Game has ended in a tie.");
-                $("p#msg_" + id).append("<br /><a href='.'>new game?</a>");
+
+                end_game('Game has ended in a tie.');
               }
               
             });
@@ -136,9 +131,13 @@
 
 
 
-  function plot_data(){
+  function end_game( msg ){
+
     $('table.game').hide();
     $('.results').show();
+    $(".results").append("<p class='game-end'>" + msg + "</p>");
+    $(".results").append("<p class='new-game'><br /><a href='.'>New Game?</a></p>");
+
     plot_global_data();
     plot_user_data();
     
