@@ -1,3 +1,9 @@
+/**
+ * Sets and manages user cookie. This associates submission 
+ * with a distinct user so that stats can be talleyed per player.
+ *
+ * Uses pseudo random string for user identification.
+ */
 $( document ).ready(function() {
 
   if( $.cookie('ttt-rr') == undefined ){

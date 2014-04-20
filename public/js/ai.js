@@ -1,3 +1,14 @@
+/**
+ * AI class for choosing countermoves for Tic Tac Toe Game.
+ *
+ * Has function for choosing next 'good' move and next 'best' move
+ * so that it can be beatable or unbeatable.
+ *
+ * Uses heuristic methodology to choose next move and is not
+ * fully algorithmic. Negamax is partially implemented but 
+ * contains a bug so is not used.
+ *
+ */
 var AI = {
 
   positions: [1,2,3,4,5,6,7,8,9],
@@ -9,8 +20,10 @@ var AI = {
   beatable: false,
 
 
-  /* Getting next position
-  ------------------------------------------------------------------*/
+  
+ /**
+  * Getting next move from available positions base on beatability setting
+  */
   get_move: function( claimed_positions ){
 
     this.user_claimed_positions = claimed_positions.player_a;
@@ -26,7 +39,6 @@ var AI = {
     }
   },
 
-
   available_positions: function(){
 
     var available = [];
@@ -37,8 +49,10 @@ var AI = {
   },
 
 
-  /* Return 'Good' next move
-  ------------------------------------------------------------------*/
+
+ /**
+  * Next decent move for when playing against beatable AI
+  */
   next_good_move: function(){
 
     if( $.inArray( 5, this.available_positions() ) !== -1 ){
@@ -84,8 +98,12 @@ var AI = {
   },
 
 
-  /* Return 'Best' next move
-  ------------------------------------------------------------------*/
+ /**
+  * Next 'Best' move for when playing against unbeatable AI.
+  *
+  * Uses simple heuristic for choosing unbeatable moves 
+  * that mimics the way a human would play an unbeatable game.
+  */
   next_best_move: function(){
 
     var ap = this.available_positions();
@@ -118,12 +136,9 @@ var AI = {
       } else {
 
         return this.random_available_position();
-      
       }
     }
-
   },
-
 
 
   winning_move: function(){
@@ -162,6 +177,12 @@ var AI = {
   },
 
 
+ /**
+  * Begining of negamax algorithm for choosing 'best'
+  * next move given any current game state.
+  *
+  * Is incomplete and not used.
+  */
   negamax: function( state, player, score ){
 
     if( this.is_terminal( state ) ){
@@ -253,8 +274,8 @@ var AI = {
   },
 
 
-  /* Reset AI
-  ------------------------------------------------------------------*/
+
+  
   reset: function(){
     this.ai_claimed_positions = [];
     this.user_claimed_positions = [];

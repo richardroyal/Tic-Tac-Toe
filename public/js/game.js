@@ -1,3 +1,6 @@
+/**
+ * Game class for tracking current game state and user turns.
+ */
 var Game = {
 
   positions: [1,2,3,4,5,6,7,8,9],
@@ -9,8 +12,9 @@ var Game = {
     player_b: [],
   },
   
-  /* Claim position and availability functions.
-  ---------------------------------------------------*/
+ /**
+  * Claim position and position availability functions.
+  */
   position_is_claimable: function(position){
 
     if( $.inArray( position, this.claimed_positions.player_a ) != -1 ){
@@ -31,9 +35,19 @@ var Game = {
     this.claimed_positions[user].push(position);
   },
 
-  /* Determine a winner, tie, or game over.
-  ---------------------------------------------------*/
+  total_claimed_positions: function(){
 
+    a_claimed = this.claimed_positions.player_a.length;
+    b_claimed = this.claimed_positions.player_b.length;
+
+    return a_claimed + b_claimed;
+  },
+
+
+
+ /**
+  * Determine a winner, tie, or game over.
+  */
   is_over: function(){
 
     if( this.total_claimed_positions() > 8 ){
@@ -78,13 +92,8 @@ var Game = {
     }
   },
 
-  total_claimed_positions: function(){
 
-    a_claimed = this.claimed_positions.player_a.length;
-    b_claimed = this.claimed_positions.player_b.length;
 
-    return a_claimed + b_claimed;
-  },
 
   reset: function(){
     this.claimed_positions.player_a = [];
