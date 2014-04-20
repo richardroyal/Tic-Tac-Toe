@@ -33,13 +33,18 @@ html(lang="en")
             td
             td
 
+      .controls
+        .pull-right
+          label Beatable? &nbsp;
+            input( type="checkbox" id="beatable" name="beatable" value='0' )
+
       .results.charts
 
-        .user
+        .user.pull-left
           canvas#user_doughnut( width="150" height="200" )
           h4 Your Stats
 
-        .global
+        .global.pull-right
           canvas#global_doughnut( width="150" height="200" )
           h4 Global Stats
 

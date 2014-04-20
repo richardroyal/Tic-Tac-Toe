@@ -6,7 +6,7 @@ var AI = {
   corner_positions: [1,3,5,7,9],
   ai_claimed_positions: [],
   user_claimed_positions: [],
-  unbeatable: true,
+  beatable: false,
 
 
   /* Getting next position
@@ -16,13 +16,13 @@ var AI = {
     this.user_claimed_positions = claimed_positions.player_a;
     this.ai_claimed_positions = claimed_positions.player_b;
 
-    if( this.unbeatable ){
+    if( this.beatable ){
       
-      return this.next_best_move();
+      return this.next_good_move();
 
     } else {
 
-      return this.next_good_move();
+      return this.next_best_move();
     }
   },
 
@@ -258,7 +258,7 @@ var AI = {
   reset: function(){
     this.ai_claimed_positions = [];
     this.user_claimed_positions = [];
-    this.unbeatable = true;
+    this.beatable = true;
   }
 
 }

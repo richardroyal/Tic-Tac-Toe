@@ -16,6 +16,13 @@ body, .wrapper{
   .clearfix{ clear: both; }
 }
 
+.pull-right{
+  float:right;
+}
+.pull-left{
+  float:left;
+}
+
 /* Game Board styles
 ================================================ */
 table.game{
@@ -69,13 +76,6 @@ table.game{
   p.wins{ color: #65B042; }
   p.ties{ color: #949FB1; }
   p.losses{ color: #F7464A; }
-
-  .global{
-    float: right;
-  }
-  .user{
-    float: left;  
-  }
 
   p.game-end{
     font-weight: bold;

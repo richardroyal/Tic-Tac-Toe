@@ -36,6 +36,7 @@
       
       if( ! Game.is_over() ) {
         $("p#msg_" + id).text("");
+        $('.controls').hide();
 
         position = $(this).data('position');
   
@@ -239,6 +240,14 @@
         });
       }
     }
+
+
+    /************************************************************/
+    /* Controls for beatable and unbeatable AI.                 */
+    /************************************************************/
+    $("input#beatable").click(function(e) {
+      AI.beatable = $(this).is(':checked');
+    });
 
   }
 }( jQuery ));

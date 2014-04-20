@@ -22,7 +22,7 @@ casper.test.begin('AI can claim open positions', 22, function suite(test) {
   /* Initial AI Logic for beatable bot
   --------------------------------------------*/
   casper.then(function() {
-    AI.unbeatable = false;
+    AI.beatable = false;
     test.assertEquals( AI.get_move( Game.claimed_positions ), 5, 'AI chooses center position.' );
     Game.claim_position( 'player_b', AI.get_move( Game.claimed_positions ) );
     test.assertNot( Game.position_is_claimable(5), 'claimed position is no longer claimable.' );
