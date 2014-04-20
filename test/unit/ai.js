@@ -64,42 +64,9 @@ casper.test.begin('AI can claim open positions', 22, function suite(test) {
   });
 
 
-  /* AI minimax functionality
+
+  /* AI response.
   --------------------------------------------*/
-  casper.then(function() {
-    Game.reset();
-    AI.reset();
-
-    state = { ai_claimed_positions: [5,6], user_claimed_positions: [1,2,3] };
-    available = [4,7,8,9];
-
-    for( var l=0; l < available.length; l++ ){
-      pstate = {};
-      pstate.ai_claimed_positions = [ 5,6, available[l] ];
-      pstate.user_claimed_positions = [1,2,3];
-      var branch_score = AI.negamax( pstate, 1, -100 );
-      console.log( branch_score );
-      console.log('***********************************')
-    }
-
-
-/*
-    state = { ai_claimed_positions: [], user_claimed_positions: [1] };
-    available = [2,3,4,5,6,7,8,9];
-
-    for( var l=0; l < available.length; l++ ){
-      pstate = {};
-      pstate.ai_claimed_positions = [ available[l] ];
-      pstate.user_claimed_positions = [1];
-      var branch_score = AI.negamax( pstate, 1, 0 );
-      console.log( branch_score );
-      console.log('***********************************')
-    }
-*/    
-  });
-
-
-
 
 
   casper.run(function() {
