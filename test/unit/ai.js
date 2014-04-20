@@ -64,11 +64,6 @@ casper.test.begin('AI can claim open positions', 22, function suite(test) {
   });
 
 
-
-  /* AI response.
-  --------------------------------------------*/
-
-
   casper.run(function() {
     Game.reset();
     test.done();
