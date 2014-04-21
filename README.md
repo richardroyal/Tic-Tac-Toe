@@ -1,4 +1,9 @@
-In fulfillment of Cox Media Group pre-employment [code challenge assignment](https://github.com/coxmediagroup/Tic-Tac-Toe)
+In fulfillment of Cox Media Group [code challenge assignment](https://github.com/coxmediagroup/Tic-Tac-Toe)
+
+Converted markdown version of this doc can be viewed here:
+
+https://gist.github.com/richardroyal/73bc03aa5cf8ee60df5e
+
 
 ## Setup
 
@@ -13,23 +18,35 @@ To run tests, install [CasperJS](http://casperjs.readthedocs.org/en/latest/insta
 
 Tests developed using v1.1.0-beta3
 
-From project folder
-
 ```sh
+# From project folder
 npm install
 ```
 
-## Running Application
+## Run Application
 
 From project folder
 
 ```sh
-# Launches server on http://localhost:5000/
-# Can also user node web.js
+# Launch server on http://localhost:5000/, can also use: node web.js
 foreman start
 ```
-Application can also be view at [tic-tac-toe-rr.herokuapp.com](http://tic-tac-toe-rr.herokuapp.com)
+Application can also be viewed at [tic-tac-toe-rr.herokuapp.com](http://tic-tac-toe-rr.herokuapp.com)
 
+## Features & Tools
+
+* NodeJS App
+* MongoDB
+* jQuery
+* Unit testing
+* Integration testing
+* Jade Template
+* ExpressJS
+* Chart.js
+* Cookie Tracking
+* Sass
+* JS Minification
+* Deployed to Heroku: http://tic-tac-toe-rr.herokuapp.com
 
 ## Testing
 
@@ -39,9 +56,8 @@ Install casperjs ~1.1.0
 
 ```sh
 # Start the nodejs dev server on http://localhost:5000/
-foreman server
+foreman start
 
-# Running full test suite
-# Open test suite to see how to run an individual test.
+# Run full test suite, open test suite to see how to run an individual test.
 ./ts.tic-tac-toe.sh
 ```
