@@ -96,7 +96,7 @@
                 $("p#msg_" + id).append( xhr.responseText + "<br />");
               },
               complete: function(xhr,status){
-  
+
                 end_game('You lost.');
               }
               
