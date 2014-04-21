@@ -5,7 +5,8 @@ echo "casperjs - `casperjs --version`"
 echo "------------------------------------------------------"
 
 echo "Running unit test on Game object."
-casperjs test --includes=../public/js/jquery-1.11.0.min.js,../public/js/game.js,../public/js/ai.js unit/game.js unit/ai.js unit/play_all_games.js
+#casperjs test --includes=../public/js/jquery-1.11.0.min.js,../public/js/game.js,../public/js/ai.js unit/game.js unit/ai.js unit/play_all_games.js
+casperjs test --includes=../public/js/app.min.js  unit/game.js unit/ai.js unit/play_all_games.js
 
 echo "------------------------------------------------------"
 echo "Testing that game results can only be saved with an active nonce key."
