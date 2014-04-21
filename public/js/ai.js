@@ -14,11 +14,10 @@ var AI = {
   positions: [1,2,3,4,5,6,7,8,9],
   winning_combinations: [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]],
   cross_positions: [2,4,6,8],
-  corner_positions: [1,3,5,7,9],
+  corner_positions: [1,3,7,9],
   ai_claimed_positions: [],
   user_claimed_positions: [],
   beatable: false,
-
 
   
  /**
@@ -42,6 +41,7 @@ var AI = {
   available_positions: function(){
 
     var available = [];
+    
     available = $(this.positions).not(this.ai_claimed_positions).get();
     available = $(available).not(this.user_claimed_positions).get();
 
@@ -69,7 +69,6 @@ var AI = {
     }
 
   },
-
 
   random_available_position: function(){
 
@@ -129,10 +128,18 @@ var AI = {
 
         return this.opponent_winning_move();
 
-      } else if( this.available_cross_positions().length !== 0 ){
+      } else if( this.opponent_forks() != false ){
 
-        return this.available_cross_positions()[0];
-        
+        return this.opponent_forks()[0];
+
+      } else if( this.non_blocked_cross_positions().length !== 0 ){
+
+        return this.non_blocked_cross_positions()[0];
+
+      } else if( this.available_corner_positions().length !== 0 ){
+
+        return this.available_corner_positions()[0];        
+
       } else {
 
         return this.random_available_position();
@@ -174,6 +181,61 @@ var AI = {
     }
 
     return move;
+  },
+
+  non_blocked_cross_positions: function(){
+
+    var ap = this.available_positions();
+    var non_blocked = [];
+
+
+    if( $([2,8]).not( ap ).length == 0 ){
+      non_blocked.push(2);
+      non_blocked.push(8);
+    }
+
+    if( $([4,6]).not( ap ).length == 0 ){
+      non_blocked.push(4);
+      non_blocked.push(6);
+    }
+
+    return non_blocked; 
+  },
+
+  /*  return moves to block oppenent forks or false */
+  opponent_forks: function(){
+
+    var blocks = [];
+
+    if( $([2,6]).not(this.user_claimed_positions).length == 0 ){
+      
+      blocks.push(3);
+      
+    } else if( $([2,4]).not(this.user_claimed_positions).length == 0 ){
+
+      blocks.push(1);
+
+    } else if( $([6,8]).not(this.user_claimed_positions).length == 0 ){
+
+      blocks.push(9);
+
+    } else if( $([4,8]).not(this.user_claimed_positions).length == 0 ){
+
+      blocks.push(7);
+    }
+
+    var available_blocks = [];
+    available_blocks = $(blocks).not(this.ai_claimed_positions).get();
+    available_blocks = $(available_blocks).not(this.user_claimed_positions).get();
+
+    if( available_blocks.length < 1 ){
+    
+      return false;
+      
+    } else {
+
+      return available_blocks; 
+    }
   },
 
 
@@ -279,7 +341,7 @@ var AI = {
   reset: function(){
     this.ai_claimed_positions = [];
     this.user_claimed_positions = [];
-    this.beatable = true;
+    this.beatable = false;
   }
 
 }
