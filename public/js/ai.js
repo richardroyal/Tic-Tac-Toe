@@ -102,41 +102,14 @@ var AI = {
   *
   * Uses simple heuristic for choosing unbeatable moves 
   * that mimics the way a human would play an unbeatable game.
+  *
+  * @see: http://onlinelibrary.wiley.com/doi/10.1207/s15516709cog1704_3/pdf
+  *
   */
   next_best_move: function(){
 
     var ap = this.available_positions();
 
-    if( this.winning_move() !== false ){
-
-      return this.winning_move();  
-
-    } else if( this.opponent_winning_move() !== false ) {
-
-      return this.opponent_winning_move();
-
-    } else if( this.opponent_forks() != false ){
-
-      return this.opponent_forks()[0];
-
-    } else if( ap.indexOf(5) !== -1 ){
-
-      return 5;
-
-    } else if( this.non_blocked_cross_positions().length !== 0 ){
-
-      return this.non_blocked_cross_positions()[0];
-
-    } else if( this.available_corner_positions().length !== 0 ){
-
-      return this.available_corner_positions()[0];        
-
-    } else {
-
-      return this.random_available_position();
-    }
-
-/*
     if( ap.length > 7 ) {
 
       if( ap.indexOf(5) !== -1 ){
@@ -147,6 +120,12 @@ var AI = {
 
         return this.available_corner_positions()[0];
       }
+
+    } else if( ap.length == 6 && 
+               this.user_claimed_positions.indexOf(5) !== -1 && 
+               $(this.corner_positions).not(this.user_claimed_positions).length != 4 )  {
+
+        return this.available_corner_positions()[0];
       
     } else {
 
@@ -175,7 +154,6 @@ var AI = {
         return this.random_available_position();
       }
     }
-    */
   },
 
 
