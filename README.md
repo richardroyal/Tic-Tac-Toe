@@ -1,10 +1,3 @@
-In fulfillment of Cox Media Group [code challenge assignment](https://github.com/coxmediagroup/Tic-Tac-Toe)
-
-Converted markdown version of this doc can be viewed here:
-
-https://gist.github.com/richardroyal/73bc03aa5cf8ee60df5e
-
-
 ## Setup
 
 Install [nodejs](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
