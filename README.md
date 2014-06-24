@@ -28,8 +28,10 @@ npm install
 From project folder
 
 ```sh
-# Launch server on http://localhost:5000/, can also use: node web.js
+# Launch server on http://localhost:5000/
 foreman start
+# or
+nf start
 ```
 Application can also be viewed at [tic-tac-toe-rr.herokuapp.com](http://tic-tac-toe-rr.herokuapp.com)
 
