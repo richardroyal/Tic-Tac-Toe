@@ -1,10 +1,3 @@
-In fulfillment of Cox Media Group [code challenge assignment](https://github.com/coxmediagroup/Tic-Tac-Toe)
-
-Converted markdown version of this doc can be viewed here:
-
-https://gist.github.com/richardroyal/73bc03aa5cf8ee60df5e
-
-
 ## Setup
 
 Install [nodejs](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
@@ -28,8 +21,10 @@ npm install
 From project folder
 
 ```sh
-# Launch server on http://localhost:5000/, can also use: node web.js
+# Launch server on http://localhost:5000/
 foreman start
+# or
+nf start
 ```
 Application can also be viewed at [tic-tac-toe-rr.herokuapp.com](http://tic-tac-toe-rr.herokuapp.com)
 
